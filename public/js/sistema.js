@@ -19,20 +19,13 @@ function  verinfo_usuario(arg){
    {
     $("#capa_formularios").html('<span>...Ha ocurrido un error, revise su conexión y vuelva a intentarlo...</span>');
    }) ;
- 
 }
-
-
-
 
 $(document).on("click",".div_modal", function(e){
 	$(this).hide();
 	$("#capa_formularios").hide();
 	$("#capa_formularios").html("");
 })
-
-
-
 
 function cargar_formulario(arg){
    var urlraiz=$("#url_raiz_proyecto").val();
@@ -44,6 +37,7 @@ function cargar_formulario(arg){
    if(arg==1){ var miurl=urlraiz+"/form_nuevo_usuario"; }
    if(arg==2){ var miurl=urlraiz+"/form_nuevo_rol"; }
    if(arg==3){ var miurl=urlraiz+"/form_nuevo_permiso"; }
+   if(arg==4){ var miurl=urlraiz+"/form_agregar_compra"; }
 
     $.ajax({
     url: miurl
@@ -58,8 +52,6 @@ function cargar_formulario(arg){
 
 }
 
-
-
 $(document).on("submit",".formentrada",function(e){
   e.preventDefault();
   var quien=$(this).attr("id");
@@ -72,6 +64,8 @@ $(document).on("submit",".formentrada",function(e){
   if(quien=="f_editar_acceso"){  var varurl=$(this).attr("action");  var div_resul="notificacion_E3";  }
   if(quien=="f_borrar_usuario"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
   if(quien=="f_asignar_permiso"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
+  if(quien=="f_agregar_compra"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
+
   
   $("#"+div_resul+"").html( $("#cargador_empresa").html());
   
@@ -174,7 +168,6 @@ function borrado_usuario(idusu){
 
 }
 
-
 function borrar_permiso(idrol,idper){
 
      var urlraiz=$("#url_raiz_proyecto").val();
@@ -190,9 +183,6 @@ function borrar_permiso(idrol,idper){
    {
      alert("No se borro correctamente, intentalo nuevamente o revisa tu conexion");
    }) ;
-
-
-
 }
 
 

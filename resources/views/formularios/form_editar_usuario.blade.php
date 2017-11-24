@@ -27,7 +27,6 @@
             <label class="col-sm-2" for="tipo">Rol a asignar*</label>
                 <div class="col-sm-6" >         
                   <select id="rol1" name="rol1" class="form-control">
-
                            @foreach($roles as $rol)
                            <option value="{{ $rol->id }}">{{ $rol->name }}</option>
                            @endforeach

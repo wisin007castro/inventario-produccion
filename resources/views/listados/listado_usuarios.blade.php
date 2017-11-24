@@ -28,12 +28,11 @@
 						
         </form>
 
-
 		<div class="margin" id="botones_control">
               <a href="javascript:void(0);" class="btn btn-xs btn-primary" onclick="cargar_formulario(1);">Agregar Usuario</a>
               <a href="{{ url("/listado_usuarios") }}"  class="btn btn-xs btn-primary" >Listado Usuarios</a> 
               <a href="javascript:void(0);" class="btn btn-xs btn-primary" onclick="cargar_formulario(2);">Roles</a> 
-              <a href="javascript:void(0);" class="btn btn-xs btn-primary" onclick="cargar_formulario(3);" >Permisos</a>                                 
+              <a href="javascript:void(0);" class="btn btn-xs btn-primary" onclick="cargar_formulario(3);" >Permisos</a>
 		</div>
 
     </div>
@@ -43,14 +42,15 @@
     <div class="table-responsive" >
 
 	    <table  class="table table-hover table-striped" cellspacing="0" width="100%">
-				<thead>
-						<tr>    <th>codigo</th>
-								<th>Rol</th>
-								<th>Nombre</th>
-								<th>Email</th>
-							    <th>Acción</th>
-						</tr>
-				</thead>
+			<thead>
+				<tr>    
+					<th>codigo</th>
+					<th>Rol</th>
+					<th>Nombre</th>
+					<th>Email</th>
+				    <th>Acción</th>
+				</tr>
+			</thead>
 	    <tbody>
 
 	    @foreach($usuarios as $usuario)

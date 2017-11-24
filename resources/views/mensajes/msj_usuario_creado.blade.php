@@ -14,13 +14,12 @@
  <div class="margin" style="margin-top:50px; text-align:center;margin-bottom: 50px;">
              
              <div class="btn-group">
-                      <a href="#"  onclick="cargar_formulario(1);" class="btn btn-success"    value=" "  > Crear Usuario</a>
+                    <a href="#"  onclick="cargar_formulario(1);" class="btn btn-success"    value=" "  > Crear Usuario</a>
                    
              </div>
 
               <div class="btn-group" style="margin-left:50px; " >
-                     
-                      <a href="{{ url('listado_usuarios') }}" class="btn btn-info"    value=" "  > Listado Usuarios </a>
+					<a href="{{ url('listado_usuarios') }}" class="btn btn-info"    value=" "  > Listado Usuarios </a>
              </div>
        
 

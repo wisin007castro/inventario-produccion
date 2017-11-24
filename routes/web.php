@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('form_borrado_usuario/{idusu}', 'UsuariosController@form_borrado_usuario');
     Route::get('borrar_rol/{idrol}', 'UsuariosController@borrar_rol');
 
-
+    Route::get('form_agregar_compra', 'ComprasController@form_agregar_compra');
+    Route::post('agregar_compra', 'ComprasController@agregar_compra');
 });
 

@@ -10,15 +10,12 @@ use Caffeinated\Shinobi\Models\Permission;
 
 class UsuariosController extends Controller
 {
- 
 
 public function form_nuevo_usuario(){
     //carga el formulario para agregar un nuevo usuario
     $roles=Role::all();
     return view("formularios.form_nuevo_usuario")->with("roles",$roles);
-
 }
-
 
 public function form_nuevo_rol(){
     //carga el formulario para agregar un nuevo rol
@@ -33,17 +30,11 @@ public function form_nuevo_permiso(){
     return view("formularios.form_nuevo_permiso")->with("roles",$roles)->with("permisos", $permisos);
 }
 
-
-
 public function listado_usuarios(){
     //presenta un listado de usuarios paginados de 100 en 100
 	$usuarios=User::paginate(100);
 	return view("listados.listado_usuarios")->with("usuarios",$usuarios);
 }
-
-
-
-
 
 public function crear_usuario(Request $request){
     //crea un nuevo usuario en el sistema
@@ -71,8 +62,6 @@ public function crear_usuario(Request $request){
             
     if($usuario->save())
     {
-
-  
       return view("mensajes.msj_usuario_creado")->with("msj","Usuario agregado correctamente") ;
     }
     else
@@ -100,12 +89,8 @@ public function crear_rol(Request $request){
     }
 }
 
-
-
-
 public function crear_permiso(Request $request){
-
-  
+ 
    $permiso=new Permission;
    $permiso->name=$request->input("permiso_nombre") ;
    $permiso->slug=$request->input("permiso_slug") ;
@@ -124,8 +109,6 @@ public function crear_permiso(Request $request){
 
 public function asignar_permiso(Request $request){
 
-
-
      $roleid=$request->input("rol_sel");
      $idper=$request->input("permiso_rol");
      $rol=Role::find($roleid);
@@ -139,9 +122,6 @@ public function asignar_permiso(Request $request){
     {
         return view("mensajes.mensaje_error")->with("msj","...Hubo un error al agregar ;...") ;
     }
-
-
-
 }
 
 
