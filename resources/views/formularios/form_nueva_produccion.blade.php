@@ -19,25 +19,7 @@
             <div class="form-group">
               <label class="col-sm-2" for="A">A</label>
               <div class="col-sm-10" >
-                <input type="number" class="form-control" min="0" id="a" name="a" value="0" required>
-              </div>
-            </div><!-- /.form-group -->
-          </div><!-- /.col -->
-
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-2" for="B">B</label>
-              <div class="col-sm-10" >
-                <input type="number" class="form-control" min="0" id="b" name="b"  value="0" required>
-              </div>
-            </div><!-- /.form-group -->
-          </div><!-- /.col -->
-
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-2" for="C">C</label>
-              <div class="col-sm-10" >
-                <input type="number" class="form-control" min="0" id="c" name="c"  value="0" required>
+                <input type="number" class="form-control" step=0.01 min="0" max="2" id="a" name="a" value="0" required>
               </div>
             </div><!-- /.form-group -->
           </div><!-- /.col -->
@@ -46,16 +28,34 @@
             <div class="form-group">
               <label class="col-sm-2" for="D">D</label>
               <div class="col-sm-10" >
-                <input type="number" class="form-control" min="0" id="d" name="d"  value="0" required>
+                <input type="number" class="form-control" step=0.01 min="0" max="2" id="d" name="d"  value="0" required>
               </div>
             </div><!-- /.form-group -->
           </div><!-- /.col -->
 
           <div class="col-md-6">
             <div class="form-group">
-              <label class="col-sm-2" for="D">E</label>
+              <label class="col-sm-2" for="B">B</label>
               <div class="col-sm-10" >
-                <input type="number" class="form-control" min="0" id="e" name="e"  value="0" required>
+                <input type="number" class="form-control" step=0.01 min="0" max="2" id="b" name="b"  value="0" required>
+              </div>
+            </div><!-- /.form-group -->
+          </div><!-- /.col -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="col-sm-2" for="E">E</label>
+              <div class="col-sm-10" >
+                <input type="number" class="form-control" step=0.01 min="0" max="2" id="e" name="e"  value="0" required>
+              </div>
+            </div><!-- /.form-group -->
+          </div><!-- /.col -->
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="col-sm-2" for="C">C</label>
+              <div class="col-sm-10" >
+                <input type="number" class="form-control" step=0.01 min="0" max="2" id="c" name="c"  value="0" required>
               </div>
             </div><!-- /.form-group -->
           </div><!-- /.col -->
@@ -64,7 +64,7 @@
             <div class="form-group">
               <label class="col-sm-2" for="F">F</label>
               <div class="col-sm-10" >
-                <input type="number" class="form-control" min="0" id="f" name="f"  value="0" required>
+                <input type="number" class="form-control" step=0.01 min="0" max="2" id="f" name="f"  value="0" required>
               </div>
             </div><!-- /.form-group -->
           </div><!-- /.col -->
