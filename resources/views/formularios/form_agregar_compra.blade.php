@@ -20,7 +20,7 @@
             <div class="form-group">
             <label class="col-sm-3" for="tipo">Articulo</label>
                 <div class="col-sm-9" >         
-                  <select id="art" name="art" class="form-control">
+                  <select id="id_art" name="id_art" class="form-control">
                      @foreach($insumos as $ins)
                         <option value="{{ $ins->id }}">{{ $ins->articulo }}</option>
                      @endforeach
@@ -37,17 +37,6 @@
               </div>
             </div><!-- /.form-group -->
           </div><!-- /.col -->
-
-
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-sm-3" for="nombre">Precio (Bs/Kg)</label>
-              <div class="col-sm-9">
-                <input type="number" class="form-control" min="0" name="precio" value="0" required>
-              </div>
-            </div><!-- /.form-group -->
-          </div><!-- /.col -->
-
 
           <div class="box-footer col-xs-12 box-gris ">
             <button type="submit" class="btn btn-primary">Agregar</button>

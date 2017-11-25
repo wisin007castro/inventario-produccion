@@ -38,6 +38,7 @@ function cargar_formulario(arg){
    if(arg==2){ var miurl=urlraiz+"/form_nuevo_rol"; }
    if(arg==3){ var miurl=urlraiz+"/form_nuevo_permiso"; }
    if(arg==4){ var miurl=urlraiz+"/form_agregar_compra"; }
+   if(arg==5){ var miurl=urlraiz+"/form_nueva_produccion"; }
 
     $.ajax({
     url: miurl
@@ -65,6 +66,7 @@ $(document).on("submit",".formentrada",function(e){
   if(quien=="f_borrar_usuario"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
   if(quien=="f_asignar_permiso"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
   if(quien=="f_agregar_compra"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
+  if(quien=="f_nueva_produccion"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
 
   
   $("#"+div_resul+"").html( $("#cargador_empresa").html());

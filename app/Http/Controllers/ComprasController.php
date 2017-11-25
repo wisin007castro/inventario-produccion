@@ -21,13 +21,14 @@ class ComprasController extends Controller
 	public function agregar_compra(Request $request){
 	    $compra = new Compra;
 	    $insumo = new Insumo;
-	    $new_insumo=Insumo::find($request->input("art"));
+	    $new_insumo=Insumo::find($request->input("id_art"));
+	    $precio=$new_insumo->precio;
 	    $cant_actual=$new_insumo->cantidad;
 
 	    $compra->id_cliente=$request->input("id_usuario");
-	    $compra->id_insumos=$request->input("art");
+	    $compra->id_insumos=$request->input("id_art");
 	    $compra->cantidad=$request->input("cant");
-	    $compra->precio=$request->input("precio");
+	    $compra->precio=$precio*$request->input("cant");
 
 	    if( $compra->save()){
 	    	$new_insumo->cantidad=$request->input("cant")+$cant_actual;

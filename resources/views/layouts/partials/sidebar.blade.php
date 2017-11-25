@@ -26,7 +26,7 @@
             <!-- Optionally, you can add icons to the links -->
      
             <li class="treeview">
-                <a href="#"><i class='fa fa-users'></i> <span>USUARIOS</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-user'></i> <span>USUARIOS</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ url('listado_usuarios') }}">Listado Usuarios</a></li>
                     <li><a href="#"></a></li>
@@ -34,9 +34,17 @@
             </li>
 
             <li class="treeview">
-                <a href="#"><i class='fa fa-users'></i> <span>COMPRAS</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-shopping-cart'></i> <span>COMPRAS</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="javascript:void(0);" onclick="cargar_formulario(4);" >Realizar Compra</a></li>
+                    <li><a href="#"></a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#"><i class='fa fa-cubes'></i> <span>PRODUCCIÓN</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="javascript:void(0);" onclick="cargar_formulario(5);" >Producir</a></li>
                     <li><a href="#"></a></li>
                 </ul>
             </li>

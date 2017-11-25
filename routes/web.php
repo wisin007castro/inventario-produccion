@@ -46,5 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('form_agregar_compra', 'ComprasController@form_agregar_compra');
     Route::post('agregar_compra', 'ComprasController@agregar_compra');
+
+    Route::get('form_nueva_produccion', 'ProduccionController@form_nueva_produccion');
 });
 
