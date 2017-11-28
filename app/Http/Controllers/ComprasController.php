@@ -19,31 +19,62 @@ class ComprasController extends Controller
 	}
 
 	public function agregar_compra(Request $request){
-	    $compra = new Compra;
+
+		$elementos = 0;//insumos a incorporar
+		$mycont = 0;
 	    $insumo = new Insumo;
-	    $new_insumo=Insumo::find($request->input("id_art"));
-	    $precio=$new_insumo->precio;
-	    $cant_actual=$new_insumo->cantidad;
 
-	    $compra->id_cliente=$request->input("id_usuario");
-	    $compra->id_insumos=$request->input("id_art");
-	    $compra->cantidad=$request->input("cant");
-	    $compra->precio=$precio*$request->input("cant");
-
-	    if( $compra->save()){
-	    	$new_insumo->cantidad=$request->input("cant")+$cant_actual;
-
-	    	if($new_insumo->save()){
-				return view("mensajes.msj_agregado_insumo")->with("msj","Articulo agregado correctamente");
-	    	}
-	    	else
-	    	{
-	    		return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar, intentarlo nuevamente");
+	    for ($i=1; $i < 7; $i++) { 
+	    	if($request->input($i)>0){
+	    		$elementos++;
 	    	}
 	    }
-	    else
-	    {
-			return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar, intentarlo nuevamente");
+
+
+	    for ($i=1; $i < 7; $i++) { 
+
+	    	if($request->input($i)>0){
+	    		$compra = new Compra;
+				$new_insumo=Insumo::find($i);//Registro del insumo por id
+			    $precio=$new_insumo->precio;
+			    $cant_actual=$new_insumo->cantidad;
+			   	$compra->id_cliente=$request->input("id_usuario");
+			    $compra->id_insumos=$i;
+			    $compra->cantidad=$request->input($i);
+			    $compra->precio=$precio*$request->input($i);
+
+			    if( $compra->save()){
+
+
+			    	$new_insumo->cantidad=$request->input($i)+$cant_actual;
+
+			    	if($new_insumo->save()){
+						$mycont++;
+			    	}
+			    	else
+			    	{
+			    		return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
+			    	}
+			    }
+			    else
+			    {
+					return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar, intentalo nuevamente");
+			    }
+	    	}
 	    }
+
+	    if($elementos==$mycont){
+	    	if($elementos>0){
+				return view("mensajes.msj_agregado_insumo")->with("msj","Articulos agregados correctamente");
+	    	}
+	    	else{
+	    		return view("mensajes.mensaje_error")->with("msj","Para agregar algun articulo al menos uno debe ser mayor a Cero");
+	    	}
+	    }
+    	else
+    	{
+    		return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar, intentalo nuevamente");
+    	}
+
 	}
 }

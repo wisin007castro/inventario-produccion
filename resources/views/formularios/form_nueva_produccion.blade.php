@@ -69,6 +69,15 @@
             </div><!-- /.form-group -->
           </div><!-- /.col -->
 
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="col-sm-8" for="F">Cantidad de productos: </label>
+              <div class="col-sm-4" >
+                <input type="number" class="form-control" step=1 min="1" id="unidades" name="unidades" value="1" required>
+              </div>
+            </div><!-- /.form-group -->
+          </div><!-- /.col -->
+
           <div class="box-footer col-xs-12 box-gris ">
             <button type="submit" class="btn btn-primary">Producir</button>
           </div>

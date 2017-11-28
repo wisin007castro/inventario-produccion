@@ -6,10 +6,13 @@
 		</label> 
 	</div>
 
-	<div class="margin" style="margin-top:50px; text-align:center;margin-bottom: 50px;">
-		<div class="btn-group" style="margin-left:50px; " >
+	<div class="margin" style="margin-top:50px; text-align:center;margin-bottom: 50px;">         
+		<div class="btn-group">
+			<a href="#"  onclick="cargar_formulario(4);" class="btn btn-success" value=""> Agregar Insumos</a>
+		</div>
 
-			<a href="javascript:void(0);" class="btn btn-info" onclick="cargar_formulario(5);" >Volver a Intentar</a>
+		<div class="btn-group" style="margin-left:50px; " >
+			<a href="#"  onclick="cargar_formulario(5);" class="btn btn-info" value=""> Volver a intentar</a>
 		</div>
 	</div> 
 </div> 

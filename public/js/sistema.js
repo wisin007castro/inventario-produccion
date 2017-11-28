@@ -39,6 +39,7 @@ function cargar_formulario(arg){
    if(arg==3){ var miurl=urlraiz+"/form_nuevo_permiso"; }
    if(arg==4){ var miurl=urlraiz+"/form_agregar_compra"; }
    if(arg==5){ var miurl=urlraiz+"/form_nueva_produccion"; }
+   if(arg==6){ var miurl=urlraiz+"/form_agregar_venta"; }
 
     $.ajax({
     url: miurl

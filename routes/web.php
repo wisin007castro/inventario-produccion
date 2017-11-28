@@ -49,5 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('form_nueva_produccion', 'ProduccionController@form_nueva_produccion');
     Route::post('nueva_produccion', 'ProduccionController@nueva_produccion');
+    // Route::get('factibilidad', 'ProduccionController@factibilidad');
+
+    Route::get('form_agregar_venta', 'VentasController@form_agregar_venta');
+    
 });
 

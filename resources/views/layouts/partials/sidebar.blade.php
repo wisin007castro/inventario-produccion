@@ -34,7 +34,7 @@
             </li>
 
             <li class="treeview">
-                <a href="#"><i class='fa fa-shopping-cart'></i> <span>COMPRAS</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class='fa fa-cart-plus'></i> <span>COMPRAS</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="javascript:void(0);" onclick="cargar_formulario(4);" >Realizar Compra</a></li>
                     <li><a href="#"></a></li>
@@ -45,6 +45,16 @@
                 <a href="#"><i class='fa fa-cubes'></i> <span>PRODUCCIÓN</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="javascript:void(0);" onclick="cargar_formulario(5);" >Producir</a></li>
+                    <li><a href="javascript:void(0);" onclick="" >Reporte de producción</a></li>
+                    <li><a href="#"></a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#"><i class='fa fa-shopping-cart'></i> <span>VENTAS</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="javascript:void(0);" onclick="cargar_formulario(6);" >Realizar Compra</a></li>
+                    <li><a href="javascript:void(0);" onclick="" >Reporte de ventas</a></li>
                     <li><a href="#"></a></li>
                 </ul>
             </li>
