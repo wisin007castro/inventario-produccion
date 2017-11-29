@@ -44,231 +44,25 @@ class ProduccionController extends Controller
 	}
 
 	public function nueva_produccion(Request $request){
-		$a = $request->input('a');
-		$b = $request->input('b');
-		$c = $request->input('c');
-		$d = $request->input('d');
-		$e = $request->input('e');
-		$f = $request->input('f');
+
 		$unidades =  $request->input('unidades');
 
-		// Dando formato al numero a dos decimales
-		if($a>=0){$a = bcdiv($a, '1', 2);}
-		if($b>=0){$b = bcdiv($b, '1', 2);}
-		if($c>=0){$c = bcdiv($c, '1', 2);}
-		if($d>=0){$d = bcdiv($d, '1', 2);}
-		if($e>=0){$e = bcdiv($e, '1', 2);}
-		if($f>=0){$f = bcdiv($f, '1', 2);}
+		$cont = 0;
 
-		$opcion = $a."+".$b."+".$c."+".$d."+".$e."+".$f;
-
-
-		switch($opcion)
-		{
-			case '0.00+1.00+0.00+0.00+2.00+0.00'://1ra Condicion	
-			if($this->verificar(0, $unidades)){
-				if($this->agregar_producto(0, $unidades)){
+		for ($i=0; $i < 22; $i++) {
+			if($this->verificar($i, $unidades)){
+				$cont = 1;
+				if($this->agregar_producto($i, $unidades)){
 					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
 				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.05+0.90+0.05+0.05+1.90+0.05'://2da Condicion
-			if($this->verificar(1, $unidades)){
-				if($this->agregar_producto(1, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
+				else{
+					return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");
 				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
 			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.10+0.80+0.10+0.10+1.80+0.10'://3ra Condicion
-			if($this->verificar(2, $unidades)){
-				if($this->agregar_producto(2, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.15+0.70+0.15+0.15+1.70+0.15'://4ta Condicion
-			if($this->verificar(3, $unidades)){
-				if($this->agregar_producto(3, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.20+0.60+0.20+0.20+1.60+0.20'://5ta Condicion
-			if($this->verificar(4, $unidades)){
-				if($this->agregar_producto(4, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.25+0.50+0.25+0.25+1.50+0.25'://6ta Condicion
-			if($this->verificar(5, $unidades)){
-				if($this->agregar_producto(5, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.30+0.40+0.30+0.30+1.40+0.30'://7ma Condicion
-			if($this->verificar(6, $unidades)){
-				if($this->agregar_producto(6, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.35+0.30+0.35+0.35+1.30+0.35'://8va Condicion
-			if($this->verificar(7, $unidades)){
-				if($this->agregar_producto(7, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.40+0.20+0.40+0.40+1.20+0.40'://9na Condicion
-			if($this->verificar(8, $unidades)){
-				if($this->agregar_producto(8, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.45+0.10+0.45+0.45+1.10+0.45'://10ma Condicion
-			if($this->verificar(9, $unidades)){
-				if($this->agregar_producto(9, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.50+0.00+0.50+0.50+1.00+0.50'://11ava Condicion
-			if($this->verificar(10, $unidades)){
-				if($this->agregar_producto(10, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.00+0.80+0.20+0.55+0.90+0.55'://12ava Condicion
-			if($this->verificar(11, $unidades)){
-				if($this->agregar_producto(11, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.20+0.80+0.00+0.60+0.80+0.60'://13ava Condicion
-			if($this->verificar(12, $unidades)){
-				if($this->agregar_producto(12, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.00+0.75+0.25+0.65+0.70+0.65'://14ava Condicion
-			if($this->verificar(13, $unidades)){
-				if($this->agregar_producto(13, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.25+0.75+0.00+0.70+0.60+0.70'://15ava Condicion
-			if($this->verificar(14, $unidades)){
-				if($this->agregar_producto(14, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.00+0.70+0.30+0.75+0.50+0.75'://16ava Condicion
-			if($this->verificar(15, $unidades)){
-				if($this->agregar_producto(15, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.30+0.70+0.00+0.80+0.40+0.80'://17ava Condicion
-			if($this->verificar(16, $unidades)){
-				if($this->agregar_producto(16, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.00+0.65+0.35+0.85+0.30+0.85'://18ava Condicion
-			if($this->verificar(17, $unidades)){
-				if($this->agregar_producto(17, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.35+0.65+0.00+0.90+0.20+0.90'://19ava Condicion
-			if($this->verificar(18, $unidades)){
-				if($this->agregar_producto(18, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.00+0.60+0.40+0.95+0.10+0.95'://20ava Condicion
-			if($this->verificar(19, $unidades)){
-				if($this->agregar_producto(19, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.40+0.60+0.00+1.00+0.00+1.00'://21ava Condicion
-			if($this->verificar(20, $unidades)){
-				if($this->agregar_producto(20, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-			case '0.50+0.00+0.50+1.00+0.00+1.00'://22ava Condicion
-			if($this->verificar(21, $unidades)){
-				if($this->agregar_producto(21, $unidades)){
-					return view("mensajes.msj_agregado_producto")->with("msj","Es posible la producción de ".$unidades. " unidad(es)");
-				}
-				else{return view("mensajes.mensaje_error")->with("msj","Hubo un error al agregar el producto");}
-			}
-			else{return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");}
-			break;
-
-			default: 
-			return view("mensajes.mensaje_no_producido")->with("msj",$opcion);
-			break;
 		}
-
+		if($cont ==0){
+			return view("mensajes.mensaje_no_producido")->with("msj","Agregue insumos o pruebe de nuevo");
+		}
 	}
 
 	public function agregar_producto($indice, $unidades){
@@ -326,7 +120,7 @@ class ProduccionController extends Controller
 			}
 
 			
-		}
+	}
 
 		public function factibilidad(){
 			
@@ -354,5 +148,5 @@ class ProduccionController extends Controller
 		// 	echo "Posible ".(string)(22-$cont_total)." combinaciones";
 		// }
 
+		}
 	}
-}
