@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('factibilidad', 'ProduccionController@factibilidad');
 
     Route::get('form_agregar_venta', 'VentasController@form_agregar_venta');
+    Route::post('agregar_venta', 'VentasController@agregar_venta');
+    
     
 });
 

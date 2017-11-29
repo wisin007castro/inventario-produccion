@@ -68,6 +68,7 @@ $(document).on("submit",".formentrada",function(e){
   if(quien=="f_asignar_permiso"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
   if(quien=="f_agregar_compra"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
   if(quien=="f_nueva_produccion"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
+  if(quien=="f_agregar_venta"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
 
   
   $("#"+div_resul+"").html( $("#cargador_empresa").html());

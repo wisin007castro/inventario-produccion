@@ -354,7 +354,5 @@ class ProduccionController extends Controller
 		// 	echo "Posible ".(string)(22-$cont_total)." combinaciones";
 		// }
 
-		}
-
-
 	}
+}

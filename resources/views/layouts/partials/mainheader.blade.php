@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ url('/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>Sistema</b></span>
+        <span class="logo-mini"><b>P</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Sistema</b> Laravel </span>
+        <span class="logo-lg"><b>Phovieda</b></span>
     </a>
 
     <!-- Header Navbar -->
