@@ -88,8 +88,9 @@ class ComprasController extends Controller
 		// return Datatables::of( Compra::get()   )->make(true);
 		return Datatables::of( Compra::join('role_user', 'compras.id_cliente', '=', 'role_user.user_id')
 									 ->join('users', 'users.id', '=', 'role_user.user_id')
+									 ->join('insumos', 'insumos.id', '=', 'compras.id_insumos')
 									 // ->where('role_user.role_id','=',2)
-									 ->select('compras.id', 'users.name','compras.id_insumos','compras.cantidad', 'compras.precio','compras.detalle', 'compras.created_at')->get())
+									 ->select('compras.id', 'users.name','insumos.detalle','compras.cantidad', 'compras.precio','compras.detalle', 'compras.created_at')->get())
 									 ->make(true);
 
 		// $compras = Compra::all();

@@ -50,7 +50,7 @@
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
-            { data: 'id_insumos', name: 'id_insumos' },
+            { data: 'detalle', name: 'detalle' },
             { data: 'cantidad', name: 'cantidad' },
             { data: 'precio', name: 'precio' },
             { data: 'detalle', name: 'detalle' },
