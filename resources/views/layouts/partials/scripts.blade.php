@@ -8,7 +8,13 @@
 <script src="{{ asset('/js/app.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/js/sistema.js') }}" type="text/javascript"></script>
 
+<script src="{{ asset('/plugins/input-mask/jquery.inputmask.js') }}"></script>
+<script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+<script src="{{ asset('/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
 
+<script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
+
+<script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the

@@ -10,25 +10,25 @@
 	</ol>
  -->
 	<div class="post">
-
-			<div class="col-sm-12">
+<!-- 
+	<div class="col-sm-12">
 				<div class="row">
 					<div class="col-sm-3">
 						<img style="width:100%;height:100px;" src="{{url('img/logo.png')}}" alt="Photo">
-					</div><!-- /.col -->
+
+					</div>
 					<div class="col-sm-3">
 						
-					</div><!-- /.col -->
+					</div>
 					<div class="col-sm-3">
 						
-					</div><!-- /.col -->
+					</div>
 					<div class="col-sm-3">
 						<img style="width:100%;height:100px;" src="{{url('img/logocasco.png')}}" alt="Photo">
-					</div><!-- /.col -->
-				</div><!-- /.row -->
-			</div><!-- /.col -->
+					</div>
+				</div>
+			</div>
 
-
-	</div>
+	</div> -->
 
 </section>

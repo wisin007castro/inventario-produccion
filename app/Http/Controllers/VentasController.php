@@ -3,65 +3,104 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Caffeinated\Shinobi\Models\Role;
 use App\Venta;
 use App\Producto;
+use App\User;
 
 class VentasController extends Controller
 {
     public function form_agregar_venta(){
     	$venta=Venta::all();
-    	if(count($venta)>0){
-    		$codigo=1+$venta->last()->id;
-    	}
-    	else{
-    		$codigo=1;
-    	}
-    	return view('formularios.form_agregar_venta')->with("codigo", $codigo);
-    }
+      $usuarios = User::all();
+      if(count($venta)>0){
+          $codigo=1+$venta->last()->id;
+      }
+      else{
+          $codigo=1;
+      }
+      return view('formularios.form_agregar_venta')->with("codigo", $codigo)->with("usuarios", $usuarios);
+  }
 
-    public function agregar_venta(Request $request){
-    	
-    	$venta = new Venta;
-    	$producto = Producto::find(1);
-		
-		$unidades_act = $producto->unidades;
-    	$tipo = 0;//0=pedido, 1=compra
-    	$detalle;
-    	if($producto->unidades < $request->input('cantidad')){
-    	$tipo = 0;//pedido
+  public function form_agregar_venta_cliente(){
+    $venta=Venta::all();
+    $usuarios = User::all();
+    if(count($venta)>0){
+        $codigo=1+$venta->last()->id;
+    }
+    else{
+        $codigo=1;
+    }
+    return view('formularios.form_agregar_venta_cliente')->with("codigo", $codigo)->with("usuarios", $usuarios);
+}
+
+public function agregar_venta(Request $request){
+
+   $venta = new Venta;
+   $producto = Producto::find(1);
+
+   $unidades_act = $producto->unidades;
+    	$tipo = 1;//
     	$detalle = "Pedido";
-  
-    	}
-    	else{
-		$tipo = 1;//Venta
-    	$detalle ="Venta";
-
-    	}
-
-    	$venta->id_cliente = $request->input('id_usuario');
-    	$venta->idproductos = 1;
-    	$venta->tipo = $tipo;
-    	$venta->unidades = $request->input('cantidad');
-    	$venta->precio = 35 * $request->input('cantidad');
-    	$venta->detalle = $detalle;
-
-    	if($venta->save()){
-    		if($tipo == 1){
-    			$producto->unidades = $unidades_act - $request->input('cantidad');
-    			if($producto->save()){
-    				return view("mensajes.msj_venta_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
-    			}else{
-    				return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
-    			}
-
-    		}
-    		else{
-    			return view("mensajes.msj_pedido_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
-    		}
-    	}
-    	else{
-    		return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
-    	}
+    	if($producto->unidades < $request->input('cantidad')){
+    	
+        $detalle = "Pedido";
+        $venta->precio = 35 * $request->input('cantidad');
+        $venta->pagado = 0;
+        $venta->saldo = 35 * $request->input('cantidad'); 
+    }
+    else{
+		$tipo = $request->input('tipo_venta');//  | Venta | Reserva | Pedido
+        if($tipo == 1){
+            $detalle ="Venta";
+            $venta->precio = 35 * $request->input('cantidad');
+            $venta->pagado = $request->input('pagado');
+            $venta->saldo = (35 * $request->input('cantidad')) - $request->input('pagado'); 
+        }
+        else{
+            if($tipo == 2){
+                $detalle ="Reserva";
+                $venta->precio = 35 * $request->input('cantidad');
+                $venta->pagado = $request->input('pagado');
+                $venta->saldo = (35 * $request->input('cantidad')) - $request->input('pagado'); 
+            }
+            else{
+                $detalle ="Pedido";
+                $tipo = 3;//pedido
+                $venta->precio = 35 * $request->input('cantidad');
+                $venta->pagado = 0;
+                $venta->saldo = 35 * $request->input('cantidad'); 
+            }
+        }
 
     }
+
+    $date = date_create($request->input('fecha'));
+
+    $venta->id_cliente = $request->input('id_usuario');
+    $venta->idproductos = 1;
+    $venta->tipo = $tipo;
+    $venta->unidades = $request->input('cantidad');
+
+    $venta->detalle = $detalle;
+    $venta->fecha_entrega = date_format($date, 'Y-m-d H:i:s');
+
+    if($venta->save()){
+      if($tipo == 3){
+         $producto->unidades = $unidades_act - $request->input('cantidad');
+             if($producto->save()){
+                return view("mensajes.msj_venta_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
+            }else{
+                return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
+            }
+        }
+        else{
+            return view("mensajes.msj_pedido_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
+        }
+    }
+    else{
+      return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
+    }
+
+}
 }

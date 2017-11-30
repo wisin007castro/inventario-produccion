@@ -6,7 +6,9 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>P</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Phovieda</b></span>
+        <div>
+            <img style="width:100%;height:60px;" src="{{url('img/logo.png')}}" alt="Photo">
+        </div>
     </a>
 
     <!-- Header Navbar -->
@@ -165,11 +167,6 @@
                         </ul>
                     </li>
                 @endif
-
-                <!-- Control Sidebar Toggle Button -->
-                <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>
             </ul>
         </div>
     </nav>

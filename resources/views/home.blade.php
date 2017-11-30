@@ -19,7 +19,7 @@ Home
 				<div class="panel-body">
 					<!-- {{ trans('adminlte_lang::message.logged') }} -->
 
-					<div class="col-lg-6" style="background-color: #fff;">
+					<div class="col-lg-7" style="background-color: #fff;">
 						<h1>Phovieda</h1>
 						<!-- <h2>Default Blockquote</h2> -->
 						<blockquote>
@@ -32,14 +32,15 @@ Home
 							.................................................</p>
 							<small>Autor de la Pagina, <cite title="Source Title">Aqui</cite></small>
 						</blockquote>
-<!--             <h2>Right Aligned Blockquote</h2> 
-            <blockquote class="pull-right">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-          </blockquote> -->
-      </div>
-  </div>
-</div>
-</div>
-</div>
+
+					</div>
+
+					<div class="col-lg-5" style="background-color: #fff;">
+						<img style="width:300px;height:30%;" src="{{url('img/logocasco.png')}}" alt="Photo">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection

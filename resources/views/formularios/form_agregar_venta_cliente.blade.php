@@ -5,7 +5,7 @@
   <div class="box box-primary  box-gris">
 
     <div class="box-header with-border my-box-header">
-      <h3 class="box-title"><strong>Ventas</strong></h3>
+      <h3 class="box-title"><strong>Ventas Cliente</strong></h3>
     </div><!-- /.box-header -->
 
     <hr style="border-color:white;" />
@@ -13,7 +13,9 @@
     <div class="box-body">
       <form   action="{{ url('agregar_venta') }}"  method="post" id="f_agregar_venta" class="formentrada" >
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
-        <!-- <input type="hidden" name="id_usuario" value="{{ Auth::user()->id }}">  -->
+        <input type="hidden" name="id_usuario" value="{{ Auth::user()->id }}"> 
+        <input type="hidden" name="tipo_venta" value="1"> <!-- pedido -->
+        <input type="hidden" name="pagado" value="0"> <!-- pagado -->
         <div class="col-md-6">
           <div class="box-body">
 
@@ -41,17 +43,13 @@
               </div>
             </div>
             <br><br>
-<div class="col-md-12">
+            <div class="col-md-12">
               <h4>Tipo de venta</h4>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
-              <select class="form-control" id="tipo_venta" name="tipo_venta">
-                <option value="1">Venta</option><!-- Venta 1 -->
-                <option value="2">Reserva</option><!-- Reserva 2 -->
-                <option value="3">Pedido</option><!-- Pedido 3 -->
-              </select>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
+                <input type="text" class="form-control" id="" name="" value="Pedido" disabled >
+              </div>
             </div>
-</div>
 
           </div>
         </div>
@@ -60,22 +58,14 @@
             <h4>Cliente</h4>
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <select class="form-control" name="id_usuario" >
-                @foreach($usuarios as $usuario)
-                @foreach($usuario->getRoles() as $roles)
-                @if($roles == "cliente")
-                <option value="{{$usuario->id}}">{{$usuario->name}}</option>
-                @endif
-                @endforeach
-                @endforeach
-              </select>
+              <input type="text" class="form-control" id="nombre" name="nombre" value="{{ Auth::user()->name }}">
             </div>
             <br>
             <div class="col-md-6">
               <h4>Pagado</h4>
               <div class="input-group">
                 <span class="input-group-addon">Bs.</span>
-                <input type="number" class="form-control" min="0" step="0.1" id="pagado" name="pagado" value="0">
+                <input type="number" class="form-control" min="0" step="0.1" value="0" disabled>
                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
               </div>
             </div>
@@ -84,19 +74,19 @@
               <h4>Saldo</h4>
               <div class="input-group">
                 <span class="input-group-addon">Bs.</span>
-                <input type="number" class="form-control" min="0" step="0.1" id="saldo" name="saldo" value="0" disabled>
+                <input type="number" class="form-control" min="0" step="0.1" id="saldo" name="saldo" value="35" disabled>
                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
               </div>
             </div>
             <br>
-<br>
-<div class="col-md-12">
+            <br>
+            <div class="col-md-12">
               <h4>Fecha de entrega</h4>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-calendar-check-o"></i></span>
-              <input type="date" class="form-control" id="fecha" name="fecha" required>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar-check-o"></i></span>
+                <input type="date" class="form-control" id="fecha" name="fecha" required>
+              </div>
             </div>
-</div>
 
           </div>
         </div>
@@ -122,61 +112,19 @@
 
 <script>
 
-    var meses = new Array ("1","2","3","4","5","6","7","8","9","10","11","12");
-    var f=new Date();
-    var fecha_act = f.getDate() + "/" + meses[f.getMonth()] + "/" + f.getFullYear();
+  var cantidad = document.getElementById('cantidad');
+  var precio = document.getElementById('precio');
+  var saldo = document.getElementById('saldo');
 
-    var cantidad = document.getElementById('cantidad');
-    var precio = document.getElementById('precio');
 
-    var pagado = document.getElementById('pagado');
-    var saldo = document.getElementById('saldo');
-
-    var tipo_venta = document.getElementById('tipo_venta');
-    var fecha = document.getElementById('fecha');
-    
-
-    cantidad.addEventListener('click',function(evento){
+  cantidad.addEventListener('click',function(evento){
     if(cantidad.checked){
         precio.value='35'
-        // txtpeso.value='3'
-    }else{
+          // txtpeso.value='3'
+      }else{
         precio.value=cantidad.value*35
-        saldo.value=(cantidad.value*35) - pagado.value
-    }
+        saldo.value=(cantidad.value*35)
+      }
     },false);
 
-    pagado.addEventListener('click',function(evento){
-    if(pagado.checked){
-        saldo.value='35'
-        // txtpeso.value='3'
-    }else{
-        saldo.value=(cantidad.value*35)-pagado.value
-        // txtpeso.value=uni.value*3
-    }
-    },false);
-
-
-    tipo_venta.addEventListener('click',function(evento){
-    if(tipo_venta.value == '1'){
-        fecha.value=fecha_act
-    }else{
-        fecha.value= '01/01/2018'
-        // txtpeso.value=uni.value*3
-    }
-    },false);
-
-
-      $(function () {
-        //Initialize Select2 Elements
-        $(".select2").select2();
-
-        //Datemask dd/mm/yyyy
-        $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-        //Datemask2 mm/dd/yyyy
-        $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-
-
-        
-      });
     </script>

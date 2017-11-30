@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Insumo;
 use App\User;
 use App\Compra;
+use Datatables;
 
 
 
@@ -77,4 +78,22 @@ class ComprasController extends Controller
     	}
 
 	}
+
+	public function listado_compras(){
+		return view('listados.listado_compras');
+	}
+
+	public function data_compras(){
+
+		// return Datatables::of( Compra::get()   )->make(true);
+		return Datatables::of( Compra::join('role_user', 'compras.id_cliente', '=', 'role_user.user_id')
+									 ->join('users', 'users.id', '=', 'role_user.user_id')
+									 // ->where('role_user.role_id','=',2)
+									 ->select('compras.id', 'users.name','compras.id_insumos','compras.cantidad', 'compras.precio','compras.detalle', 'compras.created_at')->get())
+									 ->make(true);
+
+		// $compras = Compra::all();
+		// return Datatables::queryBuilder(DB::table('compras'))->make(true);
+	}
+
 }

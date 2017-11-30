@@ -46,13 +46,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('form_agregar_compra', 'ComprasController@form_agregar_compra');
     Route::post('agregar_compra', 'ComprasController@agregar_compra');
+    Route::resource('listado_compras', 'ComprasController@listado_compras');
+    Route::resource('listado_compras_data', 'ComprasController@data_compras');
 
     Route::get('form_nueva_produccion', 'ProduccionController@form_nueva_produccion');
     Route::post('nueva_produccion', 'ProduccionController@nueva_produccion');
     // Route::get('factibilidad', 'ProduccionController@factibilidad');
 
     Route::get('form_agregar_venta', 'VentasController@form_agregar_venta');
+    Route::get('form_agregar_venta_cliente', 'VentasController@form_agregar_venta_cliente');
     Route::post('agregar_venta', 'VentasController@agregar_venta');
+
+
+    // Route::post('buscar_cliente', 'VentasController@buscar_cliente');
     
     
 });

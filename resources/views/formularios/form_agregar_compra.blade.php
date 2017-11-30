@@ -24,7 +24,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="input-group">
-                    <input type="number" class="form-control" min="0" value="0" name="1" required>
+                    <input type="number" class="form-control" step="0.01" min="0" value="0" name="1" required>
                     <span class="input-group-addon">(Kg) <i class="fa fa-check"></i></span>
                 </div>
               </div>
@@ -39,7 +39,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="input-group">
-                    <input type="number" class="form-control" min="0" value="0" name="2" required>
+                    <input type="number" class="form-control" step="0.01" min="0" value="0" name="2" required>
                     <span class="input-group-addon">(Kg) <i class="fa fa-check"></i></span>
                 </div>
               </div>
@@ -54,7 +54,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="input-group">
-                    <input type="number" class="form-control" min="0" value="0" name="3" required>
+                    <input type="number" class="form-control" step="0.01" min="0" value="0" name="3" required>
                     <span class="input-group-addon">(Kg) <i class="fa fa-check"></i></span>
                 </div>
               </div>
@@ -69,7 +69,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="input-group">
-                    <input type="number" class="form-control" min="0" value="0" name="4" required>
+                    <input type="number" class="form-control" step="0.01" min="0" value="0" name="4" required>
                     <span class="input-group-addon">(Kg) <i class="fa fa-check"></i></span>
                 </div>
               </div>
@@ -84,7 +84,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="input-group">
-                    <input type="number" class="form-control" min="0" value="0" name="5" required>
+                    <input type="number" class="form-control" step="0.01" min="0" value="0" name="5" required>
                     <span class="input-group-addon">(Kg) <i class="fa fa-check"></i></span>
                 </div>
               </div>
@@ -99,7 +99,7 @@
               </div>
               <div class="col-sm-6">
                 <div class="input-group">
-                    <input type="number" class="form-control" min="0" value="0" name="6" required>
+                    <input type="number" class="form-control" step="0.01" min="0" value="0" name="6" required>
                     <span class="input-group-addon">(Kg) <i class="fa fa-check"></i></span>
                 </div>
               </div>
