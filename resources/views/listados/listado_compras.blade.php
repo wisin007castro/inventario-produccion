@@ -16,10 +16,9 @@
                    
                         <th>Id</th>
                         <th>Cliente</th>
-                        <th>Insumos</th>
+                        <th>Insumo</th>
                         <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Detalle</th>
+                        <th>Costo Total</th>
                         <th>Fecha</th>
                         <!-- <th>accion</th> -->
                 </thead>
@@ -53,7 +52,6 @@
             { data: 'detalle', name: 'detalle' },
             { data: 'cantidad', name: 'cantidad' },
             { data: 'precio', name: 'precio' },
-            { data: 'detalle', name: 'detalle' },
             { data: 'created_at', name: 'fecha' }
             // ,
             // { data: null,  render: function ( data, type, row ) {

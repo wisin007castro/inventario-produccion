@@ -90,7 +90,7 @@ class ComprasController extends Controller
 									 ->join('users', 'users.id', '=', 'role_user.user_id')
 									 ->join('insumos', 'insumos.id', '=', 'compras.id_insumos')
 									 // ->where('role_user.role_id','=',2)
-									 ->select('compras.id', 'users.name','insumos.detalle','compras.cantidad', 'compras.precio','compras.detalle', 'compras.created_at')->get())
+									 ->select('compras.id', 'users.name','insumos.detalle','compras.cantidad', 'compras.precio', 'compras.created_at')->get())
 									 ->make(true);
 
 		// $compras = Compra::all();

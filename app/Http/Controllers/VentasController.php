@@ -7,6 +7,7 @@ use Caffeinated\Shinobi\Models\Role;
 use App\Venta;
 use App\Producto;
 use App\User;
+use Datatables;
 
 class VentasController extends Controller
 {
@@ -102,5 +103,25 @@ public function agregar_venta(Request $request){
       return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
     }
 
-}
+  }
+
+
+  public function listado_ventas(){
+    return view('listados.listado_ventas');
+  }
+
+  public function data_ventas(){
+
+    // return Datatables::of( Compra::get()   )->make(true);
+    return Datatables::of( Venta::join('role_user', 'ventas.id_cliente', '=', 'role_user.user_id')
+                   ->join('users', 'users.id', '=', 'role_user.user_id')
+                   // ->where('role_user.role_id','=',2)
+                   ->select('ventas.id', 'users.name','ventas.unidades', 'ventas.precio','ventas.pagado', 
+                    'ventas.saldo', 'ventas.detalle', 'ventas.fecha_entrega', 'ventas.created_at')->get())
+                   ->make(true);
+
+    // $compras = Compra::all();
+    // return Datatables::queryBuilder(DB::table('compras'))->make(true);
+  }
+
 }

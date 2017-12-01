@@ -57,6 +57,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('form_agregar_venta_cliente', 'VentasController@form_agregar_venta_cliente');
     Route::post('agregar_venta', 'VentasController@agregar_venta');
 
+    Route::resource('listado_ventas', 'VentasController@listado_ventas');
+    Route::resource('listado_ventas_data', 'VentasController@data_ventas');
+
 
     // Route::post('buscar_cliente', 'VentasController@buscar_cliente');
     

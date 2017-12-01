@@ -56,7 +56,7 @@
                 <ul class="treeview-menu">
                     <li><a href="javascript:void(0);" onclick="cargar_formulario(6);" >Realizar Venta</a></li>
                     <li><a href="javascript:void(0);" onclick="cargar_formulario(7);" >Realizar Compra</a></li>
-                    <li><a href="javascript:void(0);" onclick="" >Reporte de ventas</a></li>
+                    <li><a href="{{url('listado_ventas')}}" >Reporte de ventas</a></li>
                     <li><a href="#"></a></li>
                 </ul>
             </li>
