@@ -6,7 +6,14 @@
 
 @section('main-content')
 
-
+<div class="callout callout-default">
+    <div class="input-group">
+        <h4>Reporte de Compras</h4>
+              <span class="input-group-btn">
+        <button href="javascript:void(0);" onclick="refresh()" class="btn btn-info btn-flat" type="button"><i class="fa fa-refresh"></i></button>
+      </span>
+    </div>
+</div> 
 <section  id="contenido_principal">
 
 <div class="box box-primary box-gris">
@@ -61,6 +68,11 @@
     });
 }
 activar_tabla_compras();
+
+function refrescar()
+{
+    location.reload(true);
+}
 
 </script>
 

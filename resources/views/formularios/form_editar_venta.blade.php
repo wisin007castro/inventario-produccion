@@ -1,26 +1,29 @@
-<section class="content" >
+  
+  <section class="content">
 
  <div class="col-md-12">
 
   <div class="box box-primary  box-gris">
 
     <div class="box-header with-border my-box-header">
-      <h3 class="box-title"><strong>Ventas</strong></h3>
+      <h3 class="box-title"><strong> Editar Venta </strong></h3>
     </div><!-- /.box-header -->
 
     <hr style="border-color:white;" />
 
     <div class="box-body">
-      <form   action="{{ url('agregar_venta') }}"  method="post" id="f_agregar_venta" class="formentrada" >
+      <form   action="{{ url('editar_venta') }}"  method="post" id="f_editar_venta" class="formentrada" >
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
+        <input type="hidden" class="form-control" name="id" value="{{$venta->id}}">
         <!-- <input type="hidden" name="id_usuario" value="{{ Auth::user()->id }}">  -->
+
         <div class="col-md-6">
           <div class="box-body">
 
             <h4>No. Venta</h4>
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
-              <input type="number" class="form-control" value="<?php echo $codigo; ?>" disabled>
+                <input type="number" class="form-control" value="{{$venta->id}}" disabled>
               <span class="input-group-addon"><i class="fa fa-file-text"></i></span>
             </div>
             <br>
@@ -28,7 +31,7 @@
               <h4>Cantidad</h4>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                <input type="number" class="form-control" min="1" step="1" id="cantidad" name="cantidad" value="1">
+                  <input type="number" class="form-control" min="1" step="1" id="cantidad" name="cantidad" value="{{$venta->unidades}}">
                 <span class="input-group-addon"><i class="fa fa-cart-plus"></i></span>
               </div>
             </div>
@@ -36,22 +39,32 @@
               <h4>Total a pagar</h4>
               <div class="input-group">
                 <span class="input-group-addon">Bs.</span>
-                <input type="text" class="form-control" id="precio" name="precio" value="35" disabled>
+                <input type="text" class="form-control" id="precio" name="precio" value="{{$venta->precio}}" disabled>
                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
               </div>
             </div>
             <br><br>
-<div class="col-md-12">
+            <div class="col-md-12">
               <h4>Tipo de venta</h4>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
-              <select class="form-control" id="tipo_venta" name="tipo_venta">
-                <option value="1">Reserva</option><!-- Reserva 1 -->
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-shopping-cart"></i></span>
+                <select class="form-control" id="tipo_venta" name="tipo_venta">
+                  @if($venta->tipo == 1)
+                <option value="1" selected>Reserva</option><!-- Reserva 1 -->
                 <option value="2">Pedido</option><!-- Pedido 2 -->
                 <option value="3">Venta</option><!-- Venta 3 -->
+                  @elseif($venta->tipo == 2)
+                <option value="1">Reserva</option><!-- Reserva 1 -->
+                <option value="2" selected>Pedido</option><!-- Pedido 2 -->
+                <option value="3">Venta</option><!-- Venta 3 -->
+                  @else
+                <option value="1">Reserva</option><!-- Reserva 1 -->
+                <option value="2">Pedido</option><!-- Pedido 2 -->
+                <option value="3" selected>Venta</option><!-- Venta 3 -->
+                  @endif
               </select>
+              </div>
             </div>
-</div>
 
           </div>
         </div>
@@ -60,13 +73,13 @@
             <h4>Cliente</h4>
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <select class="form-control" name="id_usuario" >
+                <select class="form-control" name="id_usuario" >
                 @foreach($usuarios as $usuario)
-                @foreach($usuario->getRoles() as $roles)
-                @if($roles == "cliente")
+                
+                @if($usuario->id == $venta->id_cliente)
                 <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                 @endif
-                @endforeach
+                
                 @endforeach
               </select>
             </div>
@@ -75,7 +88,7 @@
               <h4>Pagado</h4>
               <div class="input-group">
                 <span class="input-group-addon">Bs.</span>
-                <input type="number" class="form-control" min="0" step="0.1" id="pagado" name="pagado" value="0">
+                <input type="number" class="form-control" min="0" step="0.1" id="pagado" name="pagado" value="{{$venta->pagado}}">
                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
               </div>
             </div>
@@ -84,7 +97,7 @@
               <h4>Saldo</h4>
               <div class="input-group">
                 <span class="input-group-addon">Bs.</span>
-                <input type="number" class="form-control" min="0" step="0.1" id="saldo" name="saldo" value="35" disabled>
+                <input type="number" class="form-control" min="0" step="0.1" id="saldo" name="saldo" value="{{$venta->saldo}}" disabled>
                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
               </div>
             </div>
@@ -92,11 +105,11 @@
             <br>
             <div class="col-md-12">
               <h4>Fecha de entrega</h4>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-calendar-check-o"></i></span>
-              <input type="date" class="form-control" id="fecha" name="fecha" step="1" min="<?php echo date("Y-m-d");?>" max="2023-02-23" value="<?php echo date("Y-m-d");?>" required>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar-check-o"></i></span>
+                <input type="date" class="form-control" id="fecha" name="fecha" step="1" min="<?php echo date("Y-m-d");?>" max="2023-02-23" value="<?php echo date("Y-m-d");?>" required>
+              </div>
             </div>
-          </div>
 
           </div>
         </div>
@@ -119,6 +132,10 @@
 </div>
 
 </section>
+</div>
+
+</div><!-- ./wrapper -->
+
 
 <script>
 
@@ -165,16 +182,4 @@
     },false);
 
 
-      $(function () {
-        //Initialize Select2 Elements
-        $(".select2").select2();
-
-        //Datemask dd/mm/yyyy
-        $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-        //Datemask2 mm/dd/yyyy
-        $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-
-
-        
-      });
-    </script>
+</script>

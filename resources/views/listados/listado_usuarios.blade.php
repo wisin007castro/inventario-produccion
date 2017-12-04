@@ -29,10 +29,16 @@
         </form>
 
 		<div class="margin" id="botones_control">
+			@can('crear_usuario')
               <a href="javascript:void(0);" class="btn btn-xs btn-primary" onclick="cargar_formulario(1);">Agregar Usuario</a>
               <a href="{{ url("/listado_usuarios") }}"  class="btn btn-xs btn-primary" >Listado Usuarios</a> 
+            @else
+            @endcan
+            @role('superusuario')
               <a href="javascript:void(0);" class="btn btn-xs btn-primary" onclick="cargar_formulario(2);">Roles</a> 
               <a href="javascript:void(0);" class="btn btn-xs btn-primary" onclick="cargar_formulario(3);" >Permisos</a>
+            @else
+            @endrole
 		</div>
 
     </div>
@@ -54,12 +60,22 @@
 	    <tbody>
 
 	    @foreach($usuarios as $usuario)
+	    
 		<tr role="row" class="odd">
 			<td>{{ $usuario->id }}</td>
 			<td><span class="label label-default">
-             
+             @php 
+             $contador = 0;
+             @endphp
              @foreach($usuario->getRoles() as $roles)
 			 {{  $roles.","  }}
+			 @php
+
+			 if($roles == 'superusuario' || $roles == 'admin'){
+			 	$contador++;
+			 }
+			 @endphp
+
              @endforeach
            
              </span>
@@ -67,11 +83,26 @@
 			<td class="mailbox-messages mailbox-name"><a href="javascript:void(0);"  style="display:block"><i class="fa fa-user"></i>&nbsp;&nbsp;{{ $usuario->name  }}</a></td>
 			<td>{{ $usuario->email }}</td>
 			<td>
-			
+			@role('superusuario')
+
 			<button type="button" class="btn  btn-default btn-xs" onclick="verinfo_usuario({{  $usuario->id }})" ><i class="fa fa-fw fa-edit"></i></button>
+			@else
+			
+			@if($contador > 0)
+			<button type="button" class="btn  btn-default btn-xs" disabled><i class="fa fa-fw fa-edit"></i></button>
+			@else
+			<button type="button" class="btn  btn-default btn-xs" onclick="verinfo_usuario({{  $usuario->id }})" ><i class="fa fa-fw fa-edit"></i></button>
+			@endif
+			
+			@endrole
+
+			@can('borrar_usuario')
 			<button type="button"  class="btn  btn-danger btn-xs"  onclick="borrado_usuario({{  $usuario->id }});"  ><i class="fa fa-fw fa-remove"></i></button>
+			@else
+			@endcan
 			</td>
 		</tr>
+
 	    @endforeach
 
 

@@ -14,7 +14,7 @@
       <form   action="{{ url('agregar_venta') }}"  method="post" id="f_agregar_venta" class="formentrada" >
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
         <input type="hidden" name="id_usuario" value="{{ Auth::user()->id }}"> 
-        <input type="hidden" name="tipo_venta" value="1"> <!-- pedido -->
+        <input type="hidden" name="tipo_venta" value="2"> <!-- pedido -->
         <input type="hidden" name="pagado" value="0"> <!-- pagado -->
         <div class="col-md-6">
           <div class="box-body">
@@ -58,7 +58,7 @@
             <h4>Cliente</h4>
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <input type="text" class="form-control" id="nombre" name="nombre" value="{{ Auth::user()->name }}">
+              <input type="text" class="form-control" value="{{ Auth::user()->name }}" disabled>
             </div>
             <br>
             <div class="col-md-6">
@@ -84,7 +84,7 @@
               <h4>Fecha de entrega</h4>
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar-check-o"></i></span>
-                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                <input type="date" class="form-control" id="fecha" name="fecha" step="1" min="<?php echo date("Y-m-d");?>" max="2023-02-23" value="<?php echo date("Y-m-d");?>" required>
               </div>
             </div>
 

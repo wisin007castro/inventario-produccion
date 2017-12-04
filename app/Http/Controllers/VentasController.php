@@ -7,6 +7,7 @@ use Caffeinated\Shinobi\Models\Role;
 use App\Venta;
 use App\Producto;
 use App\User;
+use App\Insumo;
 use Datatables;
 
 class VentasController extends Controller
@@ -40,64 +41,56 @@ public function agregar_venta(Request $request){
    $venta = new Venta;
    $producto = Producto::find(1);
 
-   $unidades_act = $producto->unidades;
-    	$tipo = 1;//
-    	$detalle = "Pedido";
-    	if($producto->unidades < $request->input('cantidad')){
-    	
-        $detalle = "Pedido";
-        $venta->precio = 35 * $request->input('cantidad');
-        $venta->pagado = 0;
-        $venta->saldo = 35 * $request->input('cantidad'); 
-    }
-    else{
-		$tipo = $request->input('tipo_venta');//  | Venta | Reserva | Pedido
-        if($tipo == 1){
-            $detalle ="Venta";
-            $venta->precio = 35 * $request->input('cantidad');
-            $venta->pagado = $request->input('pagado');
-            $venta->saldo = (35 * $request->input('cantidad')) - $request->input('pagado'); 
-        }
-        else{
-            if($tipo == 2){
-                $detalle ="Reserva";
-                $venta->precio = 35 * $request->input('cantidad');
-                $venta->pagado = $request->input('pagado');
-                $venta->saldo = (35 * $request->input('cantidad')) - $request->input('pagado'); 
-            }
-            else{
-                $detalle ="Pedido";
-                $tipo = 3;//pedido
-                $venta->precio = 35 * $request->input('cantidad');
-                $venta->pagado = 0;
-                $venta->saldo = 35 * $request->input('cantidad'); 
-            }
-        }
-
-    }
-
+    $unidades = $request->input('cantidad');
+    $precio = 35 * $unidades;
+    $pagado = $request->input('pagado');
+    $saldo = $precio - $pagado;
+    $tipo = $request->input('tipo_venta');
     $date = date_create($request->input('fecha'));
 
     $venta->id_cliente = $request->input('id_usuario');
     $venta->idproductos = 1;
-    $venta->tipo = $tipo;
-    $venta->unidades = $request->input('cantidad');
+    $venta->unidades = $unidades;
+    $venta->precio = $precio;
+    $venta->pagado = $pagado;
+    $venta->saldo = $saldo;
+    
 
+    if($tipo == 2 & $this->verifica_pago($precio, $pagado, $saldo, $tipo)){
+        $detalle = "Pedido";
+    }
+    elseif($tipo == 1 & $this->verifica_pago($precio, $pagado, $saldo, $tipo)){
+        $detalle = "Reserva";
+    }
+    elseif($tipo == 3 & $this->verifica_pago($precio, $pagado, $saldo, $tipo)){
+        if($producto->unidades >= $unidades){
+          $detalle = "Venta";
+        }
+        else{
+          $tipo = 1;
+          $detalle = "Reserva";
+        }
+    }
+    else{
+      return view("mensajes.mensaje_error")->with("msj","Verifique el metodo de pago");
+    }
+
+    $venta->tipo = $tipo;
     $venta->detalle = $detalle;
     $venta->fecha_entrega = date_format($date, 'Y-m-d H:i:s');
 
     if($venta->save()){
-      if($tipo == 3){
-         $producto->unidades = $unidades_act - $request->input('cantidad');
-             if($producto->save()){
-                return view("mensajes.msj_venta_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
-            }else{
-                return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
-            }
-        }
-        else{
-            return view("mensajes.msj_pedido_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
-        }
+      if($tipo == 3 & $producto->unidades >= $unidades){
+          $producto->unidades = $producto->unidades - $unidades;
+           if($producto->save()){
+              return view("mensajes.msj_venta_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
+          }else{
+              return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
+          }
+      }
+      else{
+        return view("mensajes.msj_venta_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
+      }
     }
     else{
       return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
@@ -105,23 +98,119 @@ public function agregar_venta(Request $request){
 
   }
 
-
   public function listado_ventas(){
-    return view('listados.listado_ventas');
+    $insumos_alerta = Insumo::all();
+    $tarea_ventas = Venta::all();
+
+    $tareas = 0;
+    $cant_agotados = 0;
+    foreach ($insumos_alerta as $insumo) {
+        if($insumo->cantidad <= 2){
+            $cant_agotados++;
+        }
+    }
+
+    foreach ($tarea_ventas as $venta) {
+        if($venta->detalle == 'Pedido' || $venta->detalle =='Reserva'){
+            $tareas++;
+        }
+    }
+    return view('listados.listado_ventas')
+                ->with('insumos_alerta', $insumos_alerta)
+                ->with('cant_agotados', $cant_agotados)
+                ->with('tarea_ventas', $tarea_ventas)
+                ->with('tareas', $tareas);
   }
 
   public function data_ventas(){
-
-    // return Datatables::of( Compra::get()   )->make(true);
     return Datatables::of( Venta::join('role_user', 'ventas.id_cliente', '=', 'role_user.user_id')
                    ->join('users', 'users.id', '=', 'role_user.user_id')
                    // ->where('role_user.role_id','=',2)
                    ->select('ventas.id', 'users.name','ventas.unidades', 'ventas.precio','ventas.pagado', 
-                    'ventas.saldo', 'ventas.detalle', 'ventas.fecha_entrega', 'ventas.created_at')->get())
+                    'ventas.saldo','ventas.tipo', 'ventas.detalle', 'ventas.fecha_entrega')->get())
                    ->make(true);
+  }
 
-    // $compras = Compra::all();
-    // return Datatables::queryBuilder(DB::table('compras'))->make(true);
+  public function form_editar_venta($id){
+    $usuarios = User::all();
+    $venta = Venta::find($id);
+    return view('formularios.form_editar_venta')->with('venta', $venta)->with('usuarios', $usuarios);
+  }
+
+  public function editar_venta(Request $request){
+
+    $producto = Producto::find(1);
+    $venta = Venta::find($request->input('id'));
+    $unidades = $request->input('cantidad');
+    $precio = 35 * $unidades;
+    $pagado = $request->input('pagado');
+    $saldo = $precio - $pagado;
+    $tipo = $request->input('tipo_venta');
+    $date = date_create($request->input('fecha'));
+
+    $venta->unidades = $unidades;
+    $venta->precio = $precio;
+    $venta->pagado = $pagado;
+    $venta->saldo = $saldo;
+    
+
+    if($tipo == 2 & $this->verifica_pago($precio, $pagado, $saldo, $tipo)){
+        $detalle = "Pedido";
+    }
+    elseif($tipo == 1 & $this->verifica_pago($precio, $pagado, $saldo, $tipo)){
+        $detalle = "Reserva";
+    }
+    elseif($tipo == 3 & $this->verifica_pago($precio, $pagado, $saldo, $tipo)){
+        if($producto->unidades >= $unidades){
+          $detalle = "Venta";
+        }
+        else{
+          $tipo = 1;
+          $detalle = "Reserva";
+        }
+    }
+    else{
+      return view("mensajes.mensaje_error")->with("msj","Verifique el metodo de pago");
+    }
+    $venta->tipo = $tipo;
+    $venta->detalle = $detalle;
+    $venta->fecha_entrega = date_format($date, 'Y-m-d H:i:s');
+
+    if($venta->save()){
+      if($tipo == 3 & $producto->unidades >= $unidades){
+          $producto->unidades = $producto->unidades - $unidades;
+           if($producto->save()){
+              return view("mensajes.msj_venta_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
+          }else{
+              return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
+          }
+      }
+      else{
+        return view("mensajes.msj_venta_producto")->with("msj","Inventario actualizado correctamente como ".$detalle);
+      }
+    }
+    else{
+      return view("mensajes.mensaje_error")->with("msj","Hubo un error, intentalo nuevamente");
+    }
+
+
+  }
+
+  public function verifica_pago($precio, $pagado, $saldo, $tipo){
+
+    if($tipo == 2 & $pagado == 0 & $saldo == $precio){
+      return true;
+    }
+    elseif($tipo == 1 & $pagado > 0 & $pagado <=$precio & ($pagado + $saldo) == $precio){
+      return true;
+    }
+    elseif($tipo == 3 & $precio == $pagado & $saldo == 0){
+      return true;
+    }
+    else{
+      return false;
+    }
+
   }
 
 }

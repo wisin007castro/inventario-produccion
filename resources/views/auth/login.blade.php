@@ -6,14 +6,14 @@
   <div class="container" > 
           
                 <div class="col-sm-12 cabecera-login" >
-                   <a class="mybtn-social pull-right" href="{{ url('/register') }}">
+<!--                    <a class="mybtn-social pull-right" href="{{ url('/register') }}">
                        Register
-                  </a>
+                  </a> -->
 
-                  <a class="mybtn-social pull-right" href="{{ url('/login') }}">
+<!--                   <a class="mybtn-social pull-right" href="{{ url('/login') }}">
                        Login
                   </a>
-               
+                -->
                 </div>
                 
     <div class="row">

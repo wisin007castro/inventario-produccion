@@ -51,14 +51,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('form_nueva_produccion', 'ProduccionController@form_nueva_produccion');
     Route::post('nueva_produccion', 'ProduccionController@nueva_produccion');
+    Route::get('form_reporte_inventario', 'ProduccionController@form_reporte_inventario');
     // Route::get('factibilidad', 'ProduccionController@factibilidad');
 
     Route::get('form_agregar_venta', 'VentasController@form_agregar_venta');
     Route::get('form_agregar_venta_cliente', 'VentasController@form_agregar_venta_cliente');
     Route::post('agregar_venta', 'VentasController@agregar_venta');
-
     Route::resource('listado_ventas', 'VentasController@listado_ventas');
     Route::resource('listado_ventas_data', 'VentasController@data_ventas');
+    Route::get('form_editar_venta/{id}', 'VentasController@form_editar_venta');
+    Route::post('editar_venta', 'VentasController@editar_venta');
 
 
     // Route::post('buscar_cliente', 'VentasController@buscar_cliente');

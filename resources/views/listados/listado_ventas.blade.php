@@ -6,11 +6,18 @@
 
 @section('main-content')
 
-
+<div class="callout callout-default">
+    <div class="input-group">
+        <h4>Reporte de ventas</h4>
+              <span class="input-group-btn">
+        <button href="javascript:void(0);" onclick="refresh()" class="btn btn-info btn-flat" type="button"><i class="fa fa-refresh"></i></button>
+      </span>
+    </div>
+</div>  
 <section  id="contenido_principal">
 
-<div class="box box-primary box-gris">
-        <div id='table_responsive' style='min-height: 700px;' >
+<div class="box box-primary">
+        <div id='table_responsive' style='min-height: 400px;' >
            <table class="table table-bordered table-striped" id="tabla-ventas" style='width: 100% !important;'>
                 <thead>
                         <th>Id</th>
@@ -19,10 +26,10 @@
                         <th>Costo</th>
                         <th>Pagado</th>
                         <th>Saldo</th>
+                        <th>Tipo</th>
                         <th>Detalle</th>
                         <th>Fecha Entrega</th>
-                        <th>Fecha de Registro</th>
-
+                        
                         <th>accion</th>
                 </thead>
             </table>
@@ -42,6 +49,7 @@
 <script>
  function activar_tabla_ventas() {
     $('#tabla-ventas').DataTable({
+        order: [[ 6, 'asc' ]],
         processing: true,
         serverSide: true,
         pageLength: 10,
@@ -56,17 +64,19 @@
             { data: 'precio', name: 'precio' },
             { data: 'pagado', name: 'pagado' },
             { data: 'saldo', name: 'saldo' },
+            { data: 'tipo', name: 'tipo' },
             { data: 'detalle', name: 'detalle' },
             { data: 'fecha_entrega', name: 'fecha_entrega' },
-            { data: 'created_at', name: 'created_at' },
+            
             
             { data: null,  render: function ( data, type, row ) {
                 
             if(data.detalle=='Reserva')
-                return "<a href='{{ url('form_editar_contacto/') }}/"+ data.id +"'><i class='fa fa-circle-o text-red'></i></a>" 
+                return "<a href='javascript:void(0);' onclick='verinfo_venta("+ data.id +")'><i class='fa fa-circle-o text-red'></i></a>" 
+
 
             else if(data.detalle=='Pedido')
-                return "<a href='{{ url('form_editar_contacto/') }}/"+ data.id +"'><i class='fa fa-circle-o text-yellow'></i></a>" 
+                return "<a href='javascript:void(0);' onclick='verinfo_venta("+ data.id +")'><i class='fa fa-circle-o text-yellow'></i></a>" 
             else
                 return "<i class='fa fa-circle-o text-green'></i></a>" 
             }  
@@ -76,6 +86,11 @@
     });
 }
 activar_tabla_ventas();
+
+function refresh()
+{
+    location.reload(true);
+}
 
 </script>
 

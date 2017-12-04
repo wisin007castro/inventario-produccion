@@ -2,7 +2,7 @@
 <div class="row" >
 
 <div class="col-md-12">
-
+@can('crear_usuario')
   <div class="box box-primary box-gris">
     <div class="box-header with-border my-box-header">
         <h3 class="box-title"><strong>Asignar rol</strong></h3>
@@ -11,7 +11,9 @@
     <div id="zona_etiquetas_roles" style="background-color:white;" >
     Roles asignados:
     @foreach($usuario->getRoles() as $rl)
+
       <span class="label label-warning" style="margin-left:10px;">{{ $rl }} </span> 
+
     @endforeach
     
     
@@ -24,7 +26,13 @@
                 <div class="col-sm-6" >         
                   <select id="rol1" name="rol1" class="form-control">
                            @foreach($roles as $rol)
-                           <option value="{{ $rol->id }}">{{ $rol->name }}</option>
+                              @can('asignar_permiso')
+                           <option value="{{ $rol->id }}">{{ $rol->name }}</option>                                 
+                              @else
+                              @if($rol->id == 2)
+                          <option value="{{ $rol->id }}">{{ $rol->name }}</option>
+                              @endif  
+                              @endcan
                            @endforeach
                   </select>    
                 </div>
@@ -46,7 +54,13 @@
                 <div class="col-sm-6" >         
                   <select id="rol2" name="rol2" class="form-control">
                            @foreach($roles as $rol)
-                           <option value="{{ $rol->id }}">{{ $rol->name }}</option>
+                              @can('asignar_permiso')
+                           <option value="{{ $rol->id }}">{{ $rol->name }}</option>                                 
+                              @else
+                              @if($rol->id == 2)
+                          <option value="{{ $rol->id }}">{{ $rol->name }}</option>
+                              @endif  
+                              @endcan
                            @endforeach
                   </select>    
                 </div>
@@ -62,8 +76,10 @@
     </div>
 
   </div> <!--box -->
+@else
+@endcan
 
-
+@can('editar_usuario')
   <div class="box box-primary box-gris">
  
       <div class="box-header with-border my-box-header">
@@ -120,13 +136,14 @@
       </div>
                     
     </div>
+@else
+@endcan
 
 
 
 
 
-
-
+@can('editar_acceso')
   <div class="box box-primary   box-gris" style="margin-bottom: 200px;">
     <div class="box-header with-border my-box-header">
         <h3 class="box-title"><strong>Acceso al sistema</strong></h3>
@@ -176,6 +193,8 @@
          </div>
 
   </div>
+@else
+@endcan
   </div>                     
 </div>
 </section>

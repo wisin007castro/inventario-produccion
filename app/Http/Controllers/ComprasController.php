@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Insumo;
 use App\User;
 use App\Compra;
+use App\Venta;
 use Datatables;
 
 
@@ -80,7 +81,28 @@ class ComprasController extends Controller
 	}
 
 	public function listado_compras(){
-		return view('listados.listado_compras');
+        
+        $insumos_alerta = Insumo::all();
+        $tarea_ventas = Venta::all();
+
+        $tareas = 0;
+        $cant_agotados = 0;
+        foreach ($insumos_alerta as $insumo) {
+            if($insumo->cantidad <= 2){
+                $cant_agotados++;
+            }
+        }
+
+        foreach ($tarea_ventas as $venta) {
+            if($venta->detalle == 'Pedido' || $venta->detalle =='Reserva'){
+                $tareas++;
+            }
+        }
+		return view('listados.listado_compras')
+                ->with('insumos_alerta', $insumos_alerta)
+                ->with('cant_agotados', $cant_agotados)
+                ->with('tarea_ventas', $tarea_ventas)
+                ->with('tareas', $tareas);
 	}
 
 	public function data_compras(){

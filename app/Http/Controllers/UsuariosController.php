@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
+use App\Insumo;
+use App\Venta;
 
 class UsuariosController extends Controller
 {
@@ -32,8 +34,31 @@ public function form_nuevo_permiso(){
 
 public function listado_usuarios(){
     //presenta un listado de usuarios paginados de 100 en 100
+  $insumos_alerta = Insumo::all();
+  $tarea_ventas = Venta::all();
+  $roles2 = Role::all();
+
+
+  $tareas = 0;
+  $cant_agotados = 0;
+  foreach ($insumos_alerta as $insumo) {
+      if($insumo->cantidad <= 2){
+          $cant_agotados++;
+      }
+  }
+
+  foreach ($tarea_ventas as $venta) {
+      if($venta->detalle == 'Pedido' || $venta->detalle =='Reserva'){
+          $tareas++;
+      }
+  }
 	$usuarios=User::paginate(100);
-	return view("listados.listado_usuarios")->with("usuarios",$usuarios);
+	return view("listados.listado_usuarios")->with("usuarios",$usuarios)
+                ->with('insumos_alerta', $insumos_alerta)
+                ->with('cant_agotados', $cant_agotados)
+                ->with('tarea_ventas', $tarea_ventas)
+                ->with('tareas', $tareas)
+                ->with("roles2",$roles2);
 }
 
 public function crear_usuario(Request $request){
@@ -160,8 +185,28 @@ public function editar_usuario(Request $request){
 
 public function buscar_usuario(Request $request){
 	$dato=$request->input("dato_buscado");
+   $insumos_alerta = Insumo::all();
+  $tarea_ventas = Venta::all();
+
+  $tareas = 0;
+  $cant_agotados = 0;
+  foreach ($insumos_alerta as $insumo) {
+      if($insumo->cantidad <= 2){
+          $cant_agotados++;
+      }
+  }
+
+  foreach ($tarea_ventas as $venta) {
+      if($venta->detalle == 'Pedido' || $venta->detalle =='Reserva'){
+          $tareas++;
+      }
+  }
 	$usuarios=User::where("name","like","%".$dato."%")->orwhere("apellidos","like","%".$dato."%")                                              ->paginate(100);
-	return view('listados.listado_usuarios')->with("usuarios",$usuarios);
+
+	return view('listados.listado_usuarios')->with("usuarios",$usuarios)->with('insumos_alerta', $insumos_alerta)
+                ->with('cant_agotados', $cant_agotados)
+                ->with('tarea_ventas', $tarea_ventas)
+                ->with('tareas', $tareas);
       }
 
 
@@ -248,6 +293,8 @@ public function borrar_rol($idrole){
     $role->delete();
     return "ok";
 }
+
+
 
 
 }

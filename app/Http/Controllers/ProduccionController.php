@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\Insumo;
+use App\Venta;
 
 class ProduccionController extends Controller
 {
@@ -41,6 +42,35 @@ class ProduccionController extends Controller
 
 	public function form_nueva_produccion(){
 		return view("formularios.form_nueva_produccion");
+	}
+
+	public function form_reporte_inventario(){
+
+		$ventas = Venta::all();
+		$producto = Producto::find(1);
+		$insumos = Insumo::all();
+
+		$costo_insumos = 0;
+		$total_insumos = 0;
+		foreach ($insumos as $insumo) {
+			$costo_insumos = $costo_insumos + ($insumo->cantidad * $insumo->precio);
+			$total_insumos = $total_insumos + $insumo->cantidad;
+		}
+		$costo_insumos = round($costo_insumos, 2);
+
+		$total_ventas = 0;
+		foreach ($ventas as $venta) {
+			if($venta->detalle == 'Venta'){
+				$total_ventas = $total_ventas + $venta->precio;
+			}
+		}
+		$total_ventas = round($total_ventas, 2);
+		return view("formularios.form_reporte_inventario")
+					->with('insumos', $insumos)
+					->with('producto', $producto)
+					->with('costo_insumos', $costo_insumos)
+					->with('total_insumos', $total_insumos)
+					->with('total_ventas', $total_ventas);
 	}
 
 	public function nueva_produccion(Request $request){

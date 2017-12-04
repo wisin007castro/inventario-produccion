@@ -1,3 +1,28 @@
+function  verinfo_venta(arg){
+
+
+  var urlraiz=$("#url_raiz_proyecto").val();
+  var miurl =urlraiz+"/form_editar_venta/"+arg+""; 
+  $("#capa_modal").show();
+  $("#capa_formularios").show();
+  var screenTop = $(document).scrollTop();
+  $("#capa_formularios").css('top', screenTop);
+  $("#capa_formularios").html($("#cargador_empresa").html());
+
+    $.ajax({
+    url: miurl
+    }).done( function(resul) 
+    {
+     $("#capa_formularios").html(resul);
+   
+    }).fail( function() 
+   {
+    $("#capa_formularios").html('<span>...Ha ocurrido un error, revise su conexión y vuelva a intentarlo...</span>');
+   }) ;
+}
+
+
+
 function  verinfo_usuario(arg){
 
 
@@ -41,6 +66,7 @@ function cargar_formulario(arg){
    if(arg==5){ var miurl=urlraiz+"/form_nueva_produccion"; }
    if(arg==6){ var miurl=urlraiz+"/form_agregar_venta"; }
    if(arg==7){ var miurl=urlraiz+"/form_agregar_venta_cliente"; }
+   if(arg==8){ var miurl=urlraiz+"/form_reporte_inventario"; }
 
     $.ajax({
     url: miurl
@@ -70,6 +96,7 @@ $(document).on("submit",".formentrada",function(e){
   if(quien=="f_agregar_compra"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
   if(quien=="f_nueva_produccion"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
   if(quien=="f_agregar_venta"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
+  if(quien=="f_editar_venta"){  var varurl=$(this).attr("action");  var div_resul="capa_formularios";  }
 
   
   $("#"+div_resul+"").html( $("#cargador_empresa").html());
